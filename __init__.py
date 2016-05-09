@@ -1,3 +1,4 @@
 stone = __import__('stoneCreator')
 
-newUrl = stone.StoneCreator('asd')
+#Test variable
+newUrl = stone.StoneCreator('http://asd')

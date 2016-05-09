@@ -27,8 +27,33 @@ uint8_t advdata[] =
 };
 """
 
+CONSTS = __import__('constants');
+
 class StoneCreator:
-    def __init__(self, url):
+    def __init__(self, url, power = 0):
         if(len(url) >= 17):
             raise ValueError('URL length should be maximum 17 characters')
+        if(power < -100 or power > 20):
+            raise ValueError('Power should be greater than -100dBm and lessthan 20dBm')
+        self.power = power
+        self.url = url
+        self.map()
         print("Sucess")
+
+    def map(self):
+        self.encoded = CONSTS.EDDYSCAFFOLD
+        for index, scheme in enumerate(CONSTS.SCHEMES):
+            isSchemeAvailable = False
+            if(self.url.startswith(scheme)):
+                isSchemeAvailable = True
+                self.encoded.append(index)
+                break
+        if(not isSchemeAvailable):
+            raise ValueError('Invalid URL protocol please use any og these \n', CONSTS.SCHEMES)
+        print(self.encoded)
+
+    def getURL(self):
+        return self.url
+
+    def getEncodedURL(self):
+        return self.encoded
